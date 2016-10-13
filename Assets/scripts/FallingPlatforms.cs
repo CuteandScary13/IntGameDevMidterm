@@ -18,6 +18,7 @@ public class FallingPlatforms : MonoBehaviour {
              //Debug.Log("Curtime after " + curTime);
            }
          else {
+                Destroy(this);
                 Destroy(platform);
             }
         
@@ -40,20 +41,22 @@ public class FallingPlatforms : MonoBehaviour {
     void ChangeColor(float time, GameObject plat)
     {
         Renderer rend = plat.GetComponent<Renderer>();
-        if (time > destroyTime * (2f / 3f))
+
+        if (time > destroyTime * .75f)
         {
-            Debug.Log(destroyTime + "," + time);
             rend.material.color = new Color(0f, 1f, 0f, 1f);//green
         }
-        else if (time > destroyTime * (1f / 3f))
+        else if (time > destroyTime * .5f)
         {
-            Debug.Log(destroyTime + "" + time);
             rend.material.color = new Color(1f, 1f, 0f, 1f);//yellow
         }
-        else if (time > 0)
+        else if (time > destroyTime * .25) 
         {
-            Debug.Log(destroyTime + "" + time);
             rend.material.color = new Color(1f, 0.5f, 0f, 1f);//orange
+        }
+        else
+        {
+            rend.material.color = new Color(1f, 0f, 0f, 1f);//red
         }
     }
 }
