@@ -27,12 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         transform.Rotate(0f, mouseX * 5f, 0f);
       
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            cController.Move(transform.up * jumpDist);
-            cController.Move(transform.forward * jumpDist  );
-           
-        }
+       
         
 
         if (this.transform.position.y < -5)
@@ -40,11 +35,5 @@ public class PlayerMovement : MonoBehaviour {
             SceneManager.LoadScene(0);
         }
     }
-
-     void Jump()
-    {
-
-    }
-   
-
+    
 }

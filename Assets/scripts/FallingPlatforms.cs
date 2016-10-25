@@ -12,10 +12,8 @@ public class FallingPlatforms : MonoBehaviour {
          if (curTime > 0)
            {
     
-              ChangeColor(curTime, platform);
-              //Debug.Log("CurTime Before" + curTime);
+             ChangeColor(curTime, platform);
              curTime -= Time.deltaTime;
-             //Debug.Log("Curtime after " + curTime);
            }
          else {
                 Destroy(this);
@@ -32,9 +30,6 @@ public class FallingPlatforms : MonoBehaviour {
         if (activator.gameObject.tag == "Player")
         {
             selfDestruct = true;
-     //       platform.GetComponent<Renderer>().material.color = Color.green;
-
-
         }
     }
 
@@ -50,7 +45,7 @@ public class FallingPlatforms : MonoBehaviour {
         {
             rend.material.color = new Color(1f, 1f, 0f, 1f);//yellow
         }
-        else if (time > destroyTime * .25) 
+        else if (time > destroyTime * .25f) 
         {
             rend.material.color = new Color(1f, 0.5f, 0f, 1f);//orange
         }

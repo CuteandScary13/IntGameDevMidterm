@@ -10,6 +10,8 @@ public class movingPlatform : MonoBehaviour {
     public Transform startTrans;//start location for platform
     public Transform endTrans;//end location for platform
     public float platformSpeed;//the speed, in Unity Units/Second, of the platform's movement
+
+    Rigidbody rb;
     
     //arent public because they get set internally.
     Vector3 direction;
@@ -18,25 +20,29 @@ public class movingPlatform : MonoBehaviour {
     void Start()
     {
         SetDestination(startTrans);
+        rb = platform.GetComponent<Rigidbody>();
+        
     }
 
     void FixedUpdate()//because of the physics on the rigidbodies(?) being harder to calculate for the comp
     {
-        platform.GetComponent<Rigidbody>().MovePosition(platform.position + direction * platformSpeed * Time.fixedDeltaTime);
-        fallingAct.transform.position = platform.transform.position;//makes the red fallingAct move with the platform;
-        //to figure out which way the platform is moving
-        if(Vector3.Distance (platform.position, destination.position) < platformSpeed * Time.fixedDeltaTime)
+        if (platform != null)
         {
-            if(destination == startTrans)
+            rb.MovePosition(platform.position + direction * platformSpeed * Time.fixedDeltaTime);
+            fallingAct.transform.position = platform.transform.position;//makes the red fallingAct move with the platform;
+                                                                        //to figure out which way the platform is moving
+            if (Vector3.Distance(platform.position, destination.position) < platformSpeed * Time.fixedDeltaTime)
             {
-                SetDestination(endTrans);
-            }
-            else
-            {
-                SetDestination(startTrans);
+                if (destination == startTrans)
+                {
+                    SetDestination(endTrans);
+                }
+                else
+                {
+                    SetDestination(startTrans);
+                }
             }
         }
-
     }
 
     void SetDestination(Transform dest)//this will set up where the platform will be moving towards.
@@ -49,12 +55,15 @@ public class movingPlatform : MonoBehaviour {
     //------------------------Gizmos------------------------------
     void OnDrawGizmos()
     {
-        //Draws a green wire cube where the plaform will move towards the "start"
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(startTrans.position, platform.localScale);
-        //Draws a red wire cube where the platform will move towards the "end"
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(endTrans.position, platform.localScale);
+        if (platform != null)
+        {
+            //Draws a green wire cube where the plaform will move towards the "start"
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(startTrans.position, platform.localScale);
+            //Draws a red wire cube where the platform will move towards the "end"
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(endTrans.position, platform.localScale);
+        }
     }
 
 }
